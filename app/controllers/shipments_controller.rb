@@ -29,4 +29,10 @@ class ShipmentsController < ApplicationController
 
     end
   end
+
+  private
+
+  def set_shipment
+    @shipment = Shipment.find(params[:id])
+  end
 end

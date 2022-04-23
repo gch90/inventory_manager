@@ -5,5 +5,5 @@
 <%= simple_form_for(@item) do |f| %>
   <%= f.input :name %>
   <%= f.input :quantity %>
-  <%= f.submit %>
+  <%= f.button :submit, "Create Inventory Item", class: "button" %>
 <% end %>
