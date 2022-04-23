@@ -1,0 +1,16 @@
+<p><%= link_to "Add items from Inventory", root_path %></p>
+
+
+<% @shipped_items.each do |item| %>
+  <ul>
+  <%= item.id %>
+  <%= item.name %>
+  <%= item.shipped_item.quantity %>
+  <%= item.shipment.status %>
+  </ul>
+<% end %>
+
+<%= link_to "Confirm Shipment", shipment_path(@shipment), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %>
