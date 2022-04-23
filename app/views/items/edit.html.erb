@@ -1,0 +1,10 @@
+<%= link_to "Back to Item Index", root_path %>
+
+<%= simple_form_for(@item) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :quantity %>
+  <%= f.submit 'Confirm Changes' %>
+<% end %>
+
+<%= link_to 'Delete', item_path(@item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}%>
+<%= link_to 'Delete', item_path(@item), method: "delete" %>

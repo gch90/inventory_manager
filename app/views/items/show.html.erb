@@ -1,0 +1,16 @@
+<h3><%= link_to "Back to Items Index", root_path %></h3>
+
+<ul>
+<li><p>Item Id: <%= @item.id %></p></li>
+<li><p>Item Description: <%= @item.name %></p></li>
+<li><p>Item Quantity: <%= @item.quantity %></p></li>
+
+</ul>
+<h3><%= link_to "edit", edit_item_path(@item) %></h3>
+
+<%= simple_form_for(@shipped_item) do |f| %>
+  <%= f.input :quantity %>
+  <%= f.input :shipment, as: :select, collection: @shipments, prompt: 'Select Shipment' %>
+  <%= f.hidden_field :item, value: @item.id %>
+  <%= f.submit 'Confirm Changes' %>
+<% end %>

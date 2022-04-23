@@ -1,0 +1,8 @@
+
+<div>
+  <%= link_to "Create New Item", new_item_path %>
+</div>
+
+<% @items.each do |item| %>
+  <%= render 'shared/item_card', item: item %>
+<% end %>

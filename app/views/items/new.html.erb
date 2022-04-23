@@ -1,0 +1,7 @@
+<h3><%= link_to "Back to Items Index", root_path %></h3>
+
+<%= simple_form_for(@item) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :quantity %>
+  <%= f.submit %>
+<% end %>

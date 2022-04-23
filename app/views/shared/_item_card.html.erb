@@ -1,0 +1,11 @@
+<%= link_to item_path(item) do%>
+<div class="card">
+  <%= item.id %>
+
+  <%= item.name %>
+
+  <%= item.quantity %>
+
+  <%= link_to "edit", edit_item_path(item) %>
+</div>
+<% end %>
