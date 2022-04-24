@@ -1,1 +1,1 @@
-puts "Hello, World!"
+puts "Inventory Manager by Georges Chami"
