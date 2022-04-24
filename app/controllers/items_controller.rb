@@ -32,12 +32,10 @@ class ItemsController < ApplicationController
     if @item.shipped_items.present?
       @item.errors.add :name, 'Item is in shipment'
       render :edit, status: :unprocessable_entity
+    elsif @item.destroy
+      redirect_to root_path, status: :see_other
     else
-      if @item.destroy
-        redirect_to root_path, status: :see_other
-      else
-        render :edit, status: :unprocessable_entity
-      end
+      render :edit, status: :unprocessable_entity
     end
   end
 

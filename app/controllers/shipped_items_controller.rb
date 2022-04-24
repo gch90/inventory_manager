@@ -1,13 +1,13 @@
 class ShippedItemsController < ApplicationController
-  # creating the instances below for when destroy fails and it rerenders
+  # Instances created if destroy fails and renders
   before_action :set_shipped_item, only: [:destroy]
 
   def create
-    # creating those instance for when create fails and it rerenders
+    # instances created if create fails and renders
     @shipments = Shipment.all.pending
     @shipped_item = ShippedItem.new
     set_item
-    ##
+    ###########
 
     # Verifying that a shipment is sent from simple_form
     if shipped_items_params[:shipment].empty?
@@ -27,13 +27,13 @@ class ShippedItemsController < ApplicationController
   end
 
   def destroy
-    # creating those instance for when create fails and it rerenders
+    # Intances created if create fails and renders
     @item = Item.find(shipped_items_params[:item])
 
     if @shipped_item.shipment.pending?
       @shipped_item.destroy
     else
-      render item_path(@item), status: :unprocessable_entity
+      render 'items/show', status: :unprocessable_entity
     end
   end
 

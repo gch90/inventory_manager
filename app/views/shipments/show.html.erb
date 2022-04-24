@@ -1,11 +1,12 @@
 <p><%= link_to "Add items from Inventory", root_path, :class => "button" %></p>
 
-<% @shipped_items.each do |shipped_item| %>
+<p><strong>Shipment status: </strong><%= @shipment.status %></p>
+
+
+<% @shipment.shipped_items.each do |shipped_item| %>
   <ul>
-    <%= shipped_item.item.id %>
-    <%= shipped_item.item.name %>
-    <%= shipped_item.quantity %>
-    <%= shipped_item.shipment.status %>
+      <li><p><strong>Item description: </strong><%= shipped_item.item.name %></p></li>
+      <p> Quantity in shipment: <%= shipped_item.quantity %></p>
   </ul>
 <% end %>
 

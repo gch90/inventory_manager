@@ -1,9 +1,11 @@
-<%= link_to "Back to Item Index", root_path %>
+<div>
+  <h3><%= link_to "Back to Items Index", root_path, :class => "button" %></h3>
+</div>
 
 <%= simple_form_for(@item) do |f| %>
   <%= f.input :name %>
   <%= f.input :quantity %>
-  <%= f.submit 'Confirm Changes' %>
+  <%= f.button :submit, "Confirm Changes", class: "button" %>
 <% end %>
 
 

@@ -1,11 +1,14 @@
 <h3><%= link_to "Back to Items Index", root_path, :class => "button" %></h3>
 
 <ul>
-  <li><p>Item Description: <%= @item.name %></p></li>
-  <li><p>Quantity in inventory: <%= @item.quantity %></p></li>
+  <li><p><strong>Item description: </strong> <%= @item.name %></p></li>
+  <p><strong>Quantity in inventory: </strong>  <%= @item.quantity %></p>
 </ul>
 
-<h3>Specify below quantity to add to a shipment</h3>
+<p><%= link_to "edit/delete", edit_item_path(@item), :class => "button" %></p>
+
+
+<h3>Specify below quantity to ship</h3>
 
 <%= simple_form_for(@shipped_item) do |f| %>
   <%= f.input :quantity %>
@@ -13,4 +16,3 @@
   <%= f.hidden_field :item, value: @item.id %>
   <%= f.button :submit, "Add to shipment", class: "button" %>
 <% end %>
-<p><%= link_to "edit/delete", edit_item_path(@item), :class => "button" %></p>

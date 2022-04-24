@@ -7,6 +7,6 @@
     </div>
   <% end %>
   <div class="container">
-      <%= button_to 'Delete', shipment_path(shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+    <%= link_to 'Edit', shipment_path(shipment), :class => "button" %>
   </div>
 </div>
