@@ -1,12 +1,21 @@
 class ShippedItemsController < ApplicationController
-  before_action :set_shipped_item, :set_item, only: [:destroy]
-  before_action :set_pending_shipments, only: [:create]
+  # creating the instances below for when destroy fails and it rerenders
+  before_action :set_shipped_item, only: [:destroy]
 
   def create
+    # creating those instance for when create fails and it rerenders
+    @shipments = Shipment.all.pending
     @shipped_item = ShippedItem.new
     set_item
-    set_shipment
-    set_shipped_quantity
+    ##
+
+    # Verifying that a shipment is sent from simple_form
+    if shipped_items_params[:shipment].empty?
+      @shipped_item.errors.add :shipment, 'Can\'t be blank'
+      render 'items/show', status: :unprocessable_entity and return
+    end
+
+    set_shipped_item_params
 
     if @shipped_item.save
       @item.quantity -= @shipped_item.quantity
@@ -18,6 +27,9 @@ class ShippedItemsController < ApplicationController
   end
 
   def destroy
+    # creating those instance for when create fails and it rerenders
+    @item = Item.find(shipped_items_params[:item])
+
     if @shipped_item.shipment.pending?
       @shipped_item.destroy
     else
@@ -36,21 +48,15 @@ class ShippedItemsController < ApplicationController
     @shipped_item.item = @item
   end
 
-  def set_shipment
-    @shipment = Shipment.find(shipped_items_params[:shipment])
-    @shipped_item.shipment = @shipment
-  end
-
-  def set_shipped_quantity
-    @quantity = shipped_items_params[:quantity]
-    @shipped_item.quantity = @quantity
-  end
-
   def set_shipped_item
     @shipped_item = ShippedItem.find(params[:id])
   end
 
-  def set_pending_shipments
-    @shipments = Shipment.all.pending
+  def set_shipped_item_params
+    @quantity = shipped_items_params[:quantity]
+    @shipped_item.quantity = @quantity
+
+    @shipment = Shipment.find(shipped_items_params[:shipment])
+    @shipped_item.shipment = @shipment
   end
 end

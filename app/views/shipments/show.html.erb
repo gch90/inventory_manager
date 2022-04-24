@@ -1,4 +1,4 @@
-<p><%= link_to "Add items from Inventory", root_path %></p>
+<p><%= link_to "Add items from Inventory", root_path, :class => "button" %></p>
 
 <% @shipped_items.each do |shipped_item| %>
   <ul>
@@ -9,5 +9,5 @@
   </ul>
 <% end %>
 
-<%= button_to 'Confirm Shipment', shipment_path(@shipment), method: :patch, form: {data: {turbo_confirm: 'Are you sure?'}}%>
-<%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}%>
+<%= button_to 'Confirm Shipment', shipment_path(@shipment), method: :patch, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>

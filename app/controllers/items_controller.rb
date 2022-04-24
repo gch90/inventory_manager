@@ -1,11 +1,12 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: %i[show edit update destroy]
 
   def new
     @item = Item.new
   end
 
   def create
+    # Instance created for simple_form
     @item = Item.new(item_params)
 
     if @item.save
@@ -27,11 +28,16 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if @item.shipped_items
+    # Verifying that items are not in a shipment
+    if @item.shipped_items.present?
+      @item.errors.add :name, 'Item is in shipment'
       render :edit, status: :unprocessable_entity
     else
-      @item.destroy
-      redirect_to root_path, status: :see_other
+      if @item.destroy
+        redirect_to root_path, status: :see_other
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 

@@ -7,6 +7,6 @@
     </div>
   <% end %>
   <div class="container">
-      <%= button_to 'Delete', shipment_path(shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}%>
+      <%= button_to 'Delete', shipment_path(shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
   </div>
 </div>

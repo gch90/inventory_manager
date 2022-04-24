@@ -1,6 +1,8 @@
 class ShipmentsController < ApplicationController
-  before_action :set_shipment, only: [:show, :update, :destroy]
-  before_action :set_shipments, only: [:index, :destroy]
+  before_action :set_shipment, only: %i[show update destroy]
+
+  # setting shipments for destroy for render of shipments index
+  before_action :set_shipments, only: %i[index destroy]
 
   def index; end
 
@@ -32,6 +34,7 @@ class ShipmentsController < ApplicationController
       @shipment.destroy
       redirect_to shipments_path
     else
+      @shipment.errors.add :status, 'Cannot delete shipped items'
       render :index, status: :unprocessable_entity
     end
   end
