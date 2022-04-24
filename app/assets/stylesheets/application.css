@@ -14,7 +14,7 @@
  *= require_self
  */
 
- .navbar ul {
+.navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -66,4 +66,10 @@
 /* Add some padding inside the card container */
 .container {
   padding: 10px 16px;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: black;
 }

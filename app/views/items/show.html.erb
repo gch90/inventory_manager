@@ -2,9 +2,9 @@
 
 <ul>
   <li><p>Item Description: <%= @item.name %></p></li>
-  <li><p>Item Quantity: <%= @item.quantity %></p></li>
+  <li><p>Quantity in inventory: <%= @item.quantity %></p></li>
 </ul>
-<h3><%= link_to "edit", edit_item_path(@item), :class => "button" %></h3>
+<h3><%= link_to "edit/delete", edit_item_path(@item), :class => "button" %></h3>
 
 <h3>Specify below quantity to add to a shipment</h3>
 
@@ -12,5 +12,5 @@
   <%= f.input :quantity %>
   <%= f.input :shipment, as: :select, collection: @shipments, prompt: 'Select Shipment' %>
   <%= f.hidden_field :item, value: @item.id %>
-  <%= f.submit 'Confirm Changes' %>
+  <%= f.button :submit, "Add to shipment", class: "button" %>
 <% end %>

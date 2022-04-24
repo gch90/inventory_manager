@@ -1,16 +1,13 @@
 <p><%= link_to "Add items from Inventory", root_path %></p>
 
-
-<% @shipped_items.each do |item| %>
+<% @shipped_items.each do |shipped_item| %>
   <ul>
-  <%= item.id %>
-  <%= item.name %>
-  <%= item.shipped_item.quantity %>
-  <%= item.shipment.status %>
+    <%= shipped_item.item.id %>
+    <%= shipped_item.item.name %>
+    <%= shipped_item.quantity %>
+    <%= shipped_item.shipment.status %>
   </ul>
 <% end %>
 
-<%= link_to "Confirm Shipment", shipment_path(@shipment), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %>
+<%= button_to 'Confirm Shipment', shipment_path(@shipment), method: :patch, form: {data: {turbo_confirm: 'Are you sure?'}}%>
+<%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}%>

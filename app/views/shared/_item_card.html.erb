@@ -1,11 +1,12 @@
-<%= link_to item_path(item) do%>
+
 <div class="card">
-  <div class="container">
-    <%= item.name %>
-    <%= item.quantity %>
-  </div>
+  <%= link_to item_path(item) do%>
+    <div class="container">
+      <p><strong>Item description:</strong> <%= item.name %></p>
+      <p><strong>Quantity in inventory:</strong><%= item.quantity %></p>
+    </div>
+  <% end %>
   <div class="container">
     <%= link_to 'edit/delete', edit_item_path(item), :class => "button" %>
   </div>
 </div>
-<% end %>

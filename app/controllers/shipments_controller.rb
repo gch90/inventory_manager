@@ -1,9 +1,8 @@
 class ShipmentsController < ApplicationController
-  before_action :set_shipment, only: [:show, :update]
+  before_action :set_shipment, only: [:show, :update, :destroy]
+  before_action :set_shipments, only: [:index, :destroy]
 
-  def index
-    @shipments = Shipment.all
-  end
+  def index; end
 
   def create
     @shipment = Shipment.new
@@ -11,7 +10,7 @@ class ShipmentsController < ApplicationController
     if @shipment.save
       redirect_to shipments_path
     else
-      render :shipments_path, status: :unprocessable_entity
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -20,13 +19,20 @@ class ShipmentsController < ApplicationController
   end
 
   def update
-    @shipment.status = 1
-    if @shipment.save
-      redirect_to shipment_path(@shipment)
+    if @shipment.shipped!
+      redirect_to shipments_path
     else
-      render shipment_path(@shipment)
-      render :edit, status: :unprocessable_entity
+      render :show, status: :unprocessable_entity
+    end
+  end
 
+  def destroy
+    if @shipment.pending?
+      return_quantity
+      @shipment.destroy
+      redirect_to shipments_path
+    else
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -34,5 +40,16 @@ class ShipmentsController < ApplicationController
 
   def set_shipment
     @shipment = Shipment.find(params[:id])
+  end
+
+  def set_shipments
+    @shipments = Shipment.all
+  end
+
+  def return_quantity
+    @shipment.shipped_items.each do |instance|
+      instance.item.quantity += instance.quantity
+      instance.item.save
+    end
   end
 end

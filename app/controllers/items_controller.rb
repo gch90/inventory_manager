@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[show edit update destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def new
     @item = Item.new
@@ -27,8 +27,12 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
-    redirect_to root_path, status: :see_other
+    if @item.shipped_items
+      render :edit, status: :unprocessable_entity
+    else
+      @item.destroy
+      redirect_to root_path, status: :see_other
+    end
   end
 
   def update

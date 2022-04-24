@@ -1,5 +1,12 @@
-<%= link_to shipment_path(shipment) do%>
+
 <div class="card">
-  <p>Shipment: <%= shipment.id %></p>
+  <%= link_to shipment_path(shipment) do%>
+    <div class="container">
+      <p>Shipment: <%= shipment.id %></p>
+      <p>Status: <%= shipment.status %></p>
+    </div>
+  <% end %>
+  <div class="container">
+      <%= button_to 'Delete', shipment_path(shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}%>
+  </div>
 </div>
-<% end %>
