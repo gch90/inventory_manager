@@ -20,12 +20,3 @@ class ShippedItem < ApplicationRecord
   validates :shipment, presence: true
   validates_with QuantityValidator
 end
-
-# class ShippedItem < ApplicationRecord
-#   with_options if: :quantity, presence: true do |item|
-#     item.validates :item, presence: true
-#     item.validates :quantity, presence: true, numericality: { greater_than: 0 }
-#     item.validates :shipment, presence: true
-#     item.validates_with QuantityValidator
-#   end
-# end

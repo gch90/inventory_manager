@@ -18,17 +18,14 @@ class ShipmentsController < ApplicationController
     @shipped_items = @shipment.shipped_items
   end
 
-  def edit
-    @items = Item.all
-    @shipped_item = ShippedItem.new
-  end
+  def edit; end
 
   def update
     if @shipment.pending? && @shipment.shipped_items.present?
       @shipment.shipped!
       redirect_to edit_shipment_path(@shipment)
     else
-      @shipment.errors.add :name, 'No items to ship'
+      @shipment.errors.add :name, 'No items to ship or already'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -52,6 +49,10 @@ class ShipmentsController < ApplicationController
 
   def set_shipments
     @shipments = Shipment.all
+  end
+
+  def set_items
+    @items = Items.all
   end
 
   def return_quantity

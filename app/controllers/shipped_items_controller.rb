@@ -1,28 +1,22 @@
 class ShippedItemsController < ApplicationController
   # Instances created if destroy fails and renders
   before_action :set_shipped_item, only: %i[destroy]
-  before_action :new_shipped_item, only: %i[new create]
 
   def new
+    @shipped_item = ShippedItem.new
     @item = Item.find(params[:item_id])
     @shipments = Shipment.where(status: 0)
   end
 
   def create
     # creating the following instances for rendering
+    @shipped_item = ShippedItem.new
     @item = Item.find(shipped_items_params[:item])
     @shipments = Shipment.where(status: 0)
-
 
     # Verifying that a shipment is sent from simple_form new_shipped_item_view
     if shipped_items_params[:shipment].empty?
       @shipped_item.errors.add :shipment, 'Can\'t be blank'
-      render :new, status: :unprocessable_entity and return
-      raise
-
-    # Verifying that an item is sent from simple_form edit_shipment_view
-    elsif shipped_items_params[:item].empty?
-      @shipped_item.errors.add :item, 'Can\'t be blank'
       render :new, status: :unprocessable_entity and return
     end
 
@@ -38,10 +32,16 @@ class ShippedItemsController < ApplicationController
   end
 
   def destroy
+    @shipment = @shipped_item.shipment
+    @item = @shipped_item.item
+
     if @shipped_item.shipment.pending?
+      @item.quantity += @shipped_item.quantity
+      @item.save
       @shipped_item.destroy
+      redirect_to shipment_path(@shipment)
     else
-      render 'items/edit', status: :unprocessable_entity
+      render 'shipments/edit', status: :unprocessable_entity
     end
   end
 
@@ -51,16 +51,12 @@ class ShippedItemsController < ApplicationController
     params.require(:shipped_item).permit(:shipment, :quantity, :item)
   end
 
+  # def set_shipment
+  #   @shipment = Shipment.find(params[:id])
+  # end
+
   def set_shipped_item
     @shipped_item = ShippedItem.find(params[:id])
-  end
-
-  def new_shipped_item
-    @shipped_item = ShippedItem.new
-  end
-
-  def set_item
-    @item = Item.find(params[:item_id])
   end
 
   def set_shipped_item_params

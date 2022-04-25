@@ -1,11 +1,13 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[show edit update destroy create]
+  before_action :set_item, only: %i[show edit update destroy]
 
   def new
     @item = Item.new
   end
 
   def create
+    @item = Item.new(item_params)
+
     if @item.save
       redirect_to @item
     else

@@ -13,11 +13,6 @@ Rails.application.routes.draw do
   # Route for shipments crud
   resources :shipments, except: [:new]
 
-  # Routes to edit shipped_items from shipment
-  resources :shipments do
-    resources :shipped_items, only: [:edit]
-  end
-
-  # Routes to create, delete, shipped_items
+  # Routes to create, delete shipped_items
   resources :shipped_items, only: %i[create destroy]
 end
