@@ -1,6 +1,6 @@
 class ShipmentsController < ApplicationController
-  before_action :set_shipment, only: %i[show update destroy]
-  before_action :set_shipments, only: %i[index]
+  before_action :set_shipment, only: %i[show update destroy edit]
+  before_action :set_shipments, only: %i[index edit]
 
   def index; end
 
@@ -18,11 +18,18 @@ class ShipmentsController < ApplicationController
     @shipped_items = @shipment.shipped_items
   end
 
+  def edit
+    @items = Item.all
+    @shipped_item = ShippedItem.new
+  end
+
   def update
-    if @shipment.shipped!
-      redirect_to shipment_path(@shipment)
+    if @shipment.pending? && @shipment.shipped_items.present?
+      @shipment.shipped!
+      redirect_to edit_shipment_path(@shipment)
     else
-      render :show, status: :unprocessable_entity
+      @shipment.errors.add :name, 'No items to ship'
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +40,7 @@ class ShipmentsController < ApplicationController
       redirect_to shipments_path
     else
       @shipment.errors.add :status, 'Cannot delete confirmed shipments'
-      render :show, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

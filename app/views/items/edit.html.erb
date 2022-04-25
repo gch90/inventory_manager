@@ -3,10 +3,9 @@
 </div>
 
 <%= simple_form_for(@item) do |f| %>
-  <%= f.input :name %>
-  <%= f.input :quantity %>
-  <%= f.button :submit, "Confirm Changes", class: "button" %>
+  <h3><%= f.input :name %></h3>
+  <h3><%= f.input :quantity %></h3>
+    <%= f.button :submit, "Confirm Changes", class: "button" %>
 <% end %>
-
 
 <%= button_to 'Delete', item_path(@item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>

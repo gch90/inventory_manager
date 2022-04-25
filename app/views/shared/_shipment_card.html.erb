@@ -2,11 +2,11 @@
 <div class="card">
   <%= link_to shipment_path(shipment) do%>
     <div class="container">
-      <p>Shipment: <%= shipment.id %></p>
-      <p>Status: <%= shipment.status %></p>
+      <p><strong>Shipment: </strong><%= shipment.id %></p>
+      <p><strong>Status: </strong><%= shipment.status %></p>
     </div>
   <% end %>
   <div class="container">
-    <%= link_to 'Edit', shipment_path(shipment), :class => "button" %>
+    <%= link_to "edit/delete", edit_shipment_path(shipment), :class => "button" %>
   </div>
 </div>

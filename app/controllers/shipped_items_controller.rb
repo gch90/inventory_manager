@@ -1,18 +1,29 @@
 class ShippedItemsController < ApplicationController
   # Instances created if destroy fails and renders
-  before_action :set_shipped_item, only: [:destroy]
+  before_action :set_shipped_item, only: %i[destroy]
+  before_action :new_shipped_item, only: %i[new create]
+
+  def new
+    @item = Item.find(params[:item_id])
+    @shipments = Shipment.where(status: 0)
+  end
 
   def create
-    # instances created if create fails and renders
-    @shipments = Shipment.all.pending
-    @shipped_item = ShippedItem.new
-    set_item
-    ###########
+    # creating the following instances for rendering
+    @item = Item.find(shipped_items_params[:item])
+    @shipments = Shipment.where(status: 0)
 
-    # Verifying that a shipment is sent from simple_form
+
+    # Verifying that a shipment is sent from simple_form new_shipped_item_view
     if shipped_items_params[:shipment].empty?
       @shipped_item.errors.add :shipment, 'Can\'t be blank'
-      render 'items/show', status: :unprocessable_entity and return
+      render :new, status: :unprocessable_entity and return
+      raise
+
+    # Verifying that an item is sent from simple_form edit_shipment_view
+    elsif shipped_items_params[:item].empty?
+      @shipped_item.errors.add :item, 'Can\'t be blank'
+      render :new, status: :unprocessable_entity and return
     end
 
     set_shipped_item_params
@@ -22,18 +33,15 @@ class ShippedItemsController < ApplicationController
       @item.save
       redirect_to shipment_path(@shipment)
     else
-      render 'items/show', status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    # Intances created if create fails and renders
-    @item = Item.find(shipped_items_params[:item])
-
     if @shipped_item.shipment.pending?
       @shipped_item.destroy
     else
-      render 'items/show', status: :unprocessable_entity
+      render 'items/edit', status: :unprocessable_entity
     end
   end
 
@@ -43,20 +51,33 @@ class ShippedItemsController < ApplicationController
     params.require(:shipped_item).permit(:shipment, :quantity, :item)
   end
 
-  def set_item
-    @item = Item.find(shipped_items_params[:item])
-    @shipped_item.item = @item
-  end
-
   def set_shipped_item
     @shipped_item = ShippedItem.find(params[:id])
   end
 
+  def new_shipped_item
+    @shipped_item = ShippedItem.new
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
   def set_shipped_item_params
+    #setting quantity
     @quantity = shipped_items_params[:quantity]
     @shipped_item.quantity = @quantity
 
+    #setting item
+    @item = Item.find(shipped_items_params[:item])
+    @shipped_item.item = @item
+
+    #setting shipment
     @shipment = Shipment.find(shipped_items_params[:shipment])
     @shipped_item.shipment = @shipment
+
+    #setting shipped_item_item
+    @item = Item.find(shipped_items_params[:item])
+    @shipped_item.item = @item
   end
 end

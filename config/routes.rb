@@ -5,7 +5,19 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "items#index"
 
-  resources :items
-  resources :shipments, only: [:create, :show, :index, :update, :destroy]
-  resources :shipped_items, only: [:create, :destroy]
+  # Routes to create shipped items from item inventory
+  resources :items do
+    resources :shipped_items, only: %i[new]
+  end
+
+  # Route for shipments crud
+  resources :shipments, except: [:new]
+
+  # Routes to edit shipped_items from shipment
+  resources :shipments do
+    resources :shipped_items, only: [:edit]
+  end
+
+  # Routes to create, delete, shipped_items
+  resources :shipped_items, only: %i[create destroy]
 end

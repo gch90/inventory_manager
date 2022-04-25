@@ -1,0 +1,16 @@
+<h3><%= link_to "Back to Items Index", root_path, :class => "button" %></h3>
+<h1>Shipping: <%= "#{@item.name}" %></h1>
+
+
+<ul>
+  <li><p><strong>Item description: </strong> <%= @item.name %></p></li>
+  <p><strong>Quantity in inventory: </strong>  <%= @item.quantity %></p>
+</ul>
+
+
+<%= simple_form_for [@shipped_item] do |f| %>
+  <h3><%= f.input :quantity, label: "Quantity"%></h1>
+  <h3><%= f.input :shipment, as: :select, collection: @shipments, prompt: 'Select Shipment', label_method: :id %></h3>
+  <%= f.hidden_field :item, value: @item.id %>
+  <%= f.button :submit, "Add to shipment", class: "button" %>
+<% end %>

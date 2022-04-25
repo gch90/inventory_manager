@@ -1,0 +1,23 @@
+<h3><p><%= link_to "Add items from Inventory", root_path, :class => "button" %></p></h3>
+
+<p><strong>Shipment status: </strong><%= @shipment.status %></p>
+
+
+<% @shipment.shipped_items.each do |shipped_item| %>
+  <ul>
+      <li><p><strong>Item description: </strong><%= shipped_item.item.name %></p></li>
+      <p> Quantity in shipment: <%= shipped_item.quantity %></p>
+      <%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+  </ul>
+<% end %>
+
+<%= simple_form_for [@item, @shipped_item] do |f| %>
+  <h3><%= f.input :quantity, label: "Quantity"%></h1>
+  <h3><%= f.input :item, as: :select, collection: @items, prompt: 'Select Item', label_method: :name %></h3>
+  <%= f.hidden_field :shipment, value: @shipment.id %>
+  <%= f.button :submit, "Add to shipment", class: "button" %>
+<% end %>
+
+
+<%= button_to 'Confirm Shipment', shipment_path(@shipment), method: :patch, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>

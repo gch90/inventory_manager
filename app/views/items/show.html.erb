@@ -5,14 +5,5 @@
   <p><strong>Quantity in inventory: </strong>  <%= @item.quantity %></p>
 </ul>
 
-<p><%= link_to "edit/delete", edit_item_path(@item), :class => "button" %></p>
-
-
-<h3>Specify below quantity to ship</h3>
-
-<%= simple_form_for(@shipped_item) do |f| %>
-  <%= f.input :quantity %>
-  <%= f.input :shipment, as: :select, collection: @shipments, prompt: 'Select Shipment', label_method: :id %>
-  <%= f.hidden_field :item, value: @item.id %>
-  <%= f.button :submit, "Add to shipment", class: "button" %>
-<% end %>
+<li style="display:inline"><%= link_to 'edit/delete', edit_item_path(@item), :class => "button" %></li>
+<li style="display:inline"><%= link_to 'ship items', new_item_shipped_item_path(@item), :class => "button" %></li>
