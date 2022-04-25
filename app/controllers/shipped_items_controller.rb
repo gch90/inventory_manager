@@ -20,6 +20,7 @@ class ShippedItemsController < ApplicationController
       render :new, status: :unprocessable_entity and return
     end
 
+    # if above validation passes set instance paramaters received from form
     set_shipped_item_params
 
     if @shipped_item.save
@@ -57,19 +58,19 @@ class ShippedItemsController < ApplicationController
   end
 
   def set_shipped_item_params
-    #setting quantity
+    # setting quantity
     @quantity = shipped_items_params[:quantity]
     @shipped_item.quantity = @quantity
 
-    #setting item
+    # setting item
     @item = Item.find(shipped_items_params[:item])
     @shipped_item.item = @item
 
-    #setting shipment
+    # setting shipment
     @shipment = Shipment.find(shipped_items_params[:shipment])
     @shipped_item.shipment = @shipment
 
-    #setting shipped_item_item
+    # setting shipped_item_item
     @item = Item.find(shipped_items_params[:item])
     @shipped_item.item = @item
   end
