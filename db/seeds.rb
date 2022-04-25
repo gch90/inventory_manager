@@ -11,7 +11,7 @@ Shipment.delete_all
 
 p 'running seed'
 items = []
-5.times do
+4.times do
   items << (Item.create!(name: Faker::Appliance.unique.equipment, quantity: 10))
 end
 
@@ -25,10 +25,10 @@ items[0..1].each do |item|
 end
 
 items.each do |item|
-  ShippedItem.create(item: item, quantity: 1, shipment: shipments[1])
+  ShippedItem.create(item: item, quantity: 1, shipment: shipments[2])
 end
 
-shipments[0].shipped!
+shipments[2].shipped!
 
 Faker::Appliance.unique.clear
 

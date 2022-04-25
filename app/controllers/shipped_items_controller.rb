@@ -41,6 +41,7 @@ class ShippedItemsController < ApplicationController
       @shipped_item.destroy
       redirect_to shipment_path(@shipment)
     else
+      @shipped_item.errors.add :shipment, 'Already shipped'
       render 'shipments/edit', status: :unprocessable_entity
     end
   end
@@ -50,10 +51,6 @@ class ShippedItemsController < ApplicationController
   def shipped_items_params
     params.require(:shipped_item).permit(:shipment, :quantity, :item)
   end
-
-  # def set_shipment
-  #   @shipment = Shipment.find(params[:id])
-  # end
 
   def set_shipped_item
     @shipped_item = ShippedItem.find(params[:id])
