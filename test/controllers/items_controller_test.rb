@@ -33,7 +33,6 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy item" do
     assert_difference("Item.count", -1) do
-      pp @item.shipped_items
       delete item_url(@item)
     end
 
