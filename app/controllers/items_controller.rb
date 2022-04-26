@@ -21,15 +21,13 @@ class ItemsController < ApplicationController
 
   def edit; end
 
-  def show
-    @shipped_item = ShippedItem.new
-  end
+  def show; end
 
   def destroy
-    if @item.shipped_items.empty?
-      @item.destroy
+    if @item.shipped_items.empty? && @item.destroy
       redirect_to root_path, status: :see_other
     else
+      @item.errors.add :name, 'Item in a shipment'
       render :edit, status: :unprocessable_entity
     end
   end

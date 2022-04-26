@@ -5,21 +5,29 @@ This is an application where a user is able to create and view inventory item. A
 
 Items can be added to pending shipment and inventory will adjust accordingly. Shipment status can be changed to shipped. You will not be able to delete items from shipments that are shipped.
 
-This is an application built with the ruby on rails template generated from replit in order to ensure stability. The code is mostly Ruby with some html CSS
+This is an application built with the ruby on rails template generated from replit in order to ensure stability. The code is mostly Ruby with some html and CSS
 
 ## **Table of Contents**
 
----
-
-* [Deployment](#Deployment)
-* [Application-step-by-step](#Application-step-by-step)
-* [Tests](#Tests)
 * [Stack](#Stack)
+* [Deployment](#Deployment)
+* [Database Schema](#Database_Schema)
+* [Application Breakdown](#Application_Breakdown)
+* [Tests](#Tests)
 
+## **Stack**
+
+- Ruby on rails framework
+
+- Ruby
+
+- SQlite
+
+- Html
+
+- CSS
 
 ## **Deployment**
-
----
 
 The application is intended to run on replit.
 
@@ -35,13 +43,14 @@ If you wish to run the application locally the following cli commands need to be
 
 The server will run on port 3000 to access it on browser go to http://localhost:3000/
 
-In the event that gems don't install correctly, try deleting the gemfile.lock and running `bundle: install` again
+
+## **Database_Schema**
+
+![DB Schema](app/assets/images/db_schema.png)
 
 
+## **Application_Breakdown**
 
-## **Application-step-by-step**
-
----
 
 ### **Homepage**
 
@@ -65,7 +74,9 @@ Item Quantity: must be an integer greater or equal to 0
 
 Changing quantity or name
 
-Items can be deleted only if they are not in a shipment or have not been shipped
+Items can be deleted only if they are not in a shipment
+
+If shipment is shipped item cannot be deleted
 
 
 ### **Ship Inventory Item**
@@ -81,38 +92,43 @@ Only pending or unshipped shipment will appear as a selection
 ### **Shipment Index**
 
 ![Shipment Index](app/assets/images/shipment_index.png)
+![Shipment Index](app/assets/images/shipment_index2.png)
+
+When shipment is confirmed ability to delete shipment is removed
+
+Creates shipments with a default status of pending
 
 ### **Shipment Show Page**
 
 ![Shipment Show](app/assets/images/shipment_show.png)
+![Shipment Show](app/assets/images/shipment_show2.png)
+
+When shipment is confirmed ability to edit shipment is removed
 
 ### **Shipment Edit Page**
 
 ![Shipment Edit](app/assets/images/shipment_edit.png)
+![Shipment Edit](app/assets/images/shipment_edit2.png)
 
-Able to delete items from shipments and return quantity to inventory only status is pending
+Able to delete items from shipments and return quantity to inventory only if shipment status is pending
 
-Able to delete the entire shipment and return quantities to inventories only status is pending
+Able to delete the entire shipment and return quantities to inventories only if shipment status is pending
 
 ## **Tests**
 
----
+Model tests for items and shipped_items
 
-### **Model Tests**
+Controller tests for items, shiments and shipped_items
 
-
-## **Stack**
-
----
-
-- Ruby on rails framework
-
-- SQlite
-
-- Ruby
-
-- Rails
-
-- html
-
-- CSS
+To run all tests, run the following command in the cli
+```bash
+  rails test
+```
+To run only the model tests, run the following command in the cli
+```bash
+   rails test test/models
+```
+To run only the controller tests, run the following command in the cli
+```bash
+   rails test test/controllers
+```

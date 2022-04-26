@@ -1,5 +1,4 @@
 class ShippedItemsController < ApplicationController
-  # Instances created if destroy fails and renders
   before_action :set_shipped_item, only: [:destroy]
 
   def new
@@ -11,8 +10,7 @@ class ShippedItemsController < ApplicationController
   def create
     @shipped_item = ShippedItem.new
 
-    # creating the following instances for rendering
-    @item = Item.find(shipped_items_params[:item])
+    # creating the following instances for page render
     @shipments = Shipment.where(status: 0)
 
     set_shipped_item_params

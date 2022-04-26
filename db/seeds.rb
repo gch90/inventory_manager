@@ -20,11 +20,11 @@ shipments = []
   shipments << Shipment.create!
 end
 
-items[0..1].each do |item|
+items[2..3].each do |item|
   ShippedItem.create(item: item, quantity: 5, shipment: shipments[0])
 end
 
-items.each do |item|
+items[2..3].each do |item|
   ShippedItem.create(item: item, quantity: 1, shipment: shipments[2])
 end
 

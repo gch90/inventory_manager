@@ -1,3 +1,5 @@
+<h1>Item Edit</h1>
+
 <div>
   <h3><%= link_to "Back to Items Index", root_path, :class => "button" %></h3>
 </div>
@@ -8,6 +10,4 @@
     <%= f.button :submit, "Confirm Changes", class: "button" %>
 <% end %>
 
-<% if @item.shipped_items.empty? %>
-  <%= button_to 'Delete', item_path(@item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
-<% end  %>
+<%= button_to 'Delete', item_path(@item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>

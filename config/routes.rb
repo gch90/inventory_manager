@@ -7,10 +7,10 @@ Rails.application.routes.draw do
 
   # Routes to create shipped items from item inventory
   resources :items do
-    resources :shipped_items, only: %i[new]
+    resources :shipped_items, only: [:new]
   end
 
-  # Route for shipments crud
+  # Route for shipments CRUD
   resources :shipments, except: [:new]
 
   # Routes to create, delete shipped_items

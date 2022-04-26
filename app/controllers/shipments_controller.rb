@@ -1,6 +1,6 @@
 class ShipmentsController < ApplicationController
   before_action :set_shipment, only: %i[show update destroy edit]
-  before_action :set_shipments, only: %i[index edit]
+  before_action :set_shipments, only: [:index]
 
   def index; end
 
@@ -25,7 +25,7 @@ class ShipmentsController < ApplicationController
       @shipment.shipped!
       redirect_to edit_shipment_path(@shipment)
     else
-      @shipment.errors.add :name, 'No items to ship or already shipped'
+      @shipment.errors.add :status, 'No items to ship or already shipped'
       render :edit, status: :unprocessable_entity
     end
   end
