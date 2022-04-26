@@ -52,6 +52,8 @@ gem "nokogiri"
 
 # Custom gems added
 gem "simple_form"
+gem "faker"
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -66,16 +68,14 @@ group :development do
   # gem "rack-mini-profiler"
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-
-  #custom gem
-  gem "faker"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
+  gem 'webdrivers', '~> 5.0', require: false
   #custom gem
   gem "faker"
+  gem 'rails-controller-testing'
 end

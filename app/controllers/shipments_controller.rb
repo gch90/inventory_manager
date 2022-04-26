@@ -25,7 +25,7 @@ class ShipmentsController < ApplicationController
       @shipment.shipped!
       redirect_to edit_shipment_path(@shipment)
     else
-      @shipment.errors.add :name, 'No items to ship or already'
+      @shipment.errors.add :name, 'No items to ship or already shipped'
       render :edit, status: :unprocessable_entity
     end
   end

@@ -1,38 +1,52 @@
 require 'test_helper'
 
 class ItemsControllerTest < ActionDispatch::IntegrationTest
-  test 'should get new' do
-    get '/items/new'
+  # was the web request successful?
+  # was the user redirected to the right page?
+  # was the user successfully authenticated?
+  # was the appropriate message displayed to the user in the view?
+  # was the correct information displayed in the response?
+
+  # called before every single test
+  setup do
+    @item = items(:one)
+  end
+
+  # called after every single test
+  teardown do
+    # when controller is using cache it may be a good idea to reset it afterwards
+    Rails.cache.clear
+  end
+
+  test "should create item" do
+    # Reuse the @item instance variable from setup
+    assert_difference("Item.count", 1) do
+      post items_url, params: { item: { name: "test", quantity: 10 } }
+    end
+  end
+
+  test "should show item" do
+    # Reuse the @item instance variable from setup
+    get item_url(@item)
     assert_response :success
   end
 
-  test 'should get create' do
-    post 'items/create'
-    assert_response :success
+  test "should destroy item" do
+    assert_difference("Item.count", -1) do
+      pp @item.shipped_items
+      delete item_url(@item)
+    end
+
+    assert_redirected_to root_path
   end
 
-  test 'should get index' do
-    get '/items'
-    assert_response :success
-  end
+  test "should update item" do
+    patch item_url(@item), params: { item: { name: "updated", quantity:10 } }
 
-  test 'should get edit' do
-    get 'items/:id/edit'
-    assert_response :success
-  end
-
-  test 'should get show' do
-    get :show
-    assert_response :success
-  end
-
-  test 'should get destroy' do
-    get :destroy
-    assert_response :success
-  end
-
-  test 'should get update' do
-    get :update
-    assert_response :success
+    assert_redirected_to item_path(@item)
+    # Reload association to fetch updated data and assert that title is updated.
+    @item.reload
+    assert_equal "updated", @item.name
+    assert_equal 10, @item.quantity
   end
 end

@@ -1,6 +1,6 @@
 class ShippedItemsController < ApplicationController
   # Instances created if destroy fails and renders
-  before_action :set_shipped_item, only: %i[destroy]
+  before_action :set_shipped_item, only: [:destroy]
 
   def new
     @shipped_item = ShippedItem.new
@@ -9,18 +9,12 @@ class ShippedItemsController < ApplicationController
   end
 
   def create
-    # creating the following instances for rendering
     @shipped_item = ShippedItem.new
+
+    # creating the following instances for rendering
     @item = Item.find(shipped_items_params[:item])
     @shipments = Shipment.where(status: 0)
 
-    # Verifying that a shipment is sent from simple_form new_shipped_item_view
-    if shipped_items_params[:shipment].empty?
-      @shipped_item.errors.add :shipment, 'Can\'t be blank'
-      render :new, status: :unprocessable_entity and return
-    end
-
-    # if above validation passes set instance paramaters received from form
     set_shipped_item_params
 
     if @shipped_item.save

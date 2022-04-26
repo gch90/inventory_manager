@@ -10,7 +10,7 @@
 
 <%= simple_form_for [@shipped_item] do |f| %>
   <h3><%= f.input :quantity, label: "Quantity"%></h1>
-  <h3><%= f.input :shipment, as: :select, collection: @shipments, prompt: 'Select Shipment', label_method: :id %></h3>
+  <h3><%= f.input :shipment, as: :select, collection: @shipments, prompt: 'Select Shipment', label_method: :id, required: true %></h3>
   <%= f.hidden_field :item, value: @item.id %>
   <%= f.button :submit, "Add to shipment", class: "button" %>
 <% end %>

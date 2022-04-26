@@ -4,8 +4,17 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one:
 # column: value
+  name: "test12"
+  quantity: 10
 #
-two: {}
+two:
 # column: value
+  name: 'random12'
+  quantity: 5
+
+three:
+  # column: value
+  name: 'random12'
+  quantity: 5

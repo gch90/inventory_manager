@@ -7,8 +7,6 @@ Items can be added to pending shipment and inventory will adjust accordingly. Sh
 
 This is an application built with the ruby on rails template generated from replit in order to ensure stability. The code is mostly Ruby with some html CSS
 
-
-
 ## **Table of Contents**
 
 ---
@@ -24,6 +22,9 @@ This is an application built with the ruby on rails template generated from repl
 ---
 
 The application is intended to run on replit.
+
+https://replit.com/@gch90/inventorymanager#app/controllers/application_controller.rb
+
 If you wish to run the application locally the following cli commands need to be executed
 ```bash
   bundle: install
@@ -45,7 +46,6 @@ In the event that gems don't install correctly, try deleting the gemfile.lock an
 ### **Homepage**
 
 The homepage is the Items Index
-
 
 ![Homepage](app/assets/images/homepage.png)
 

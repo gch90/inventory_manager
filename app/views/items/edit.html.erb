@@ -8,4 +8,6 @@
     <%= f.button :submit, "Confirm Changes", class: "button" %>
 <% end %>
 
-<%= button_to 'Delete', item_path(@item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<% if @item.shipped_items.empty? %>
+  <%= button_to 'Delete', item_path(@item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<% end  %>
