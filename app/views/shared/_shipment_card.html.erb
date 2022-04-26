@@ -7,6 +7,8 @@
     </div>
   <% end %>
   <div class="container">
-    <%= link_to "edit/delete", edit_shipment_path(shipment), :class => "button" %>
+    <% if shipment.pending? %>
+      <%= link_to "edit/delete", edit_shipment_path(shipment), :class => "button" %>
+    <% end  %>
   </div>
 </div>

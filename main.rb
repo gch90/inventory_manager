@@ -1,1 +1,1 @@
-puts "Inventory Manager by Georges Chami"
+puts "Hello Shopify ! Inventory Manager by Georges Chami"

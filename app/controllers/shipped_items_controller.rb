@@ -17,7 +17,7 @@ class ShippedItemsController < ApplicationController
 
     set_shipped_item_params
 
-    if @shipped_item.save
+    if @shipped_item.shipment.pending? && @shipped_item.save
       @item.quantity -= @shipped_item.quantity
       @item.save
       redirect_to shipment_path(@shipment)

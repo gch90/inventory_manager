@@ -1,13 +1,15 @@
-<h3><p><%= link_to "Add items from Inventory", root_path, :class => "button" %></p></h3>
+<li style="display:inline"><%= link_to 'Back to Shipment Index', shipments_path, :class => "button" %></li>
+<li style="display:inline"><%= link_to 'Add items from Inventory', root_path, :class => "button" %></li>
 
 <p><strong>Shipment status: </strong><%= @shipment.status %></p>
 
-
 <% @shipment.shipped_items.each do |shipped_item| %>
   <ul>
-      <li><p><strong>Item description: </strong><%= shipped_item.item.name %></p></li>
-      <p> Quantity in shipment: <%= shipped_item.quantity %></p>
+    <li><p><strong>Item description: </strong><%= shipped_item.item.name %></p></li>
+    <p> Quantity in shipment: <%= shipped_item.quantity %></p>
   </ul>
 <% end %>
 
-<p><%= link_to "edit/delete", edit_shipment_path(@shipment), :class => "button" %></p>
+  <% if @shipment.pending? %>
+    <p><%= link_to "edit/delete", edit_shipment_path(@shipment), :class => "button" %></p>
+  <% end  %>

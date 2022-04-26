@@ -1,16 +1,22 @@
-<h3><p><%= link_to "Add items from Inventory", root_path, :class => "button" %></p></h3>
+<li style="display:inline"><%= link_to 'Back to Shipment Index', shipments_path, :class => "button" %></li>
+<li style="display:inline"><%= link_to 'Add items from Inventory', root_path, :class => "button" %></li>
 
 <p><strong>Shipment status: </strong><%= @shipment.status %></p>
 
-
 <% @shipment.shipped_items.each do |shipped_item| %>
   <ul>
-      <li><p><strong>Item description: </strong><%= shipped_item.item.name %></p></li>
-      <p> Quantity in shipment: <%= shipped_item.quantity %></p>
-      <%= button_to 'Delete', shipped_item_path(shipped_item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+    <li><p><strong>Item description: </strong><%= shipped_item.item.name %></p></li>
+    <p> Quantity in shipment: <%= shipped_item.quantity %></p>
 
+    <% if @shipment.pending? %>
+    <%= button_to 'Delete', shipped_item_path(shipped_item), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+    <% end  %>
   </ul>
 <% end %>
 
-<%= button_to 'Confirm Shipment', shipment_path(@shipment), method: :patch, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
-<%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<% if @shipment.shipped_items.present? && @shipment.pending? %>
+  <%= button_to 'Confirm Shipment', shipment_path(@shipment), method: :patch, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<% end %>
+<% if @shipment.pending? %>
+  <%= button_to 'Delete', shipment_path(@shipment), method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'button'%>
+<% end  %>

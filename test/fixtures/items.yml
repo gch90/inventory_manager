@@ -6,15 +6,15 @@
 #
 one:
 # column: value
-  name: "test12"
+  name: "item to delete"
   quantity: 10
 #
 two:
 # column: value
-  name: 'random12'
+  name: 'pending item'
   quantity: 5
 
 three:
   # column: value
-  name: 'random12'
+  name: 'shipped item'
   quantity: 5

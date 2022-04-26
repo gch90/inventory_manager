@@ -1,42 +1,62 @@
 require 'test_helper'
 
 class ItemsControllerTest < ActionDispatch::IntegrationTest
-  # was the web request successful?
-  # was the user redirected to the right page?
-  # was the user successfully authenticated?
-  # was the appropriate message displayed to the user in the view?
-  # was the correct information displayed in the response?
-
   # called before every single test
   setup do
     @item = items(:one)
+    @item_in_shipment = items(:two)
   end
 
   # called after every single test
   teardown do
-    # when controller is using cache it may be a good idea to reset it afterwards
+    # reseting controller cache
     Rails.cache.clear
   end
 
-  test "should create item" do
-    # Reuse the @item instance variable from setup
-    assert_difference("Item.count", 1) do
-      post items_url, params: { item: { name: "test", quantity: 10 } }
-    end
+  test "should get new" do
+    get new_item_url
+    assert_response :success
+  end
+
+  test "should get index" do
+    get items_url
+    assert_response :success
+  end
+
+  test "should get show" do
+    get item_url(@item)
+    assert_response :success
+  end
+
+  test "should get edit" do
+    get edit_item_url(@item)
+    assert_response :success
   end
 
   test "should show item" do
-    # Reuse the @item instance variable from setup
     get item_url(@item)
     assert_response :success
+  end
+
+  test "should create item" do
+    assert_difference("Item.count", 1) do
+      post items_url, params: { item: { name: "test", quantity: 10 } }
+    end
+    assert_response :redirect
+    assert_redirected_to item_path(Item.last)
   end
 
   test "should destroy item" do
     assert_difference("Item.count", -1) do
       delete item_url(@item)
     end
-
     assert_redirected_to root_path
+  end
+
+  test "should not destroy item in shipment" do
+    assert_difference("Item.count", 0) do
+      delete item_url(@item_in_shipment)
+    end
   end
 
   test "should update item" do

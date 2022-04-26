@@ -26,8 +26,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    # Verifying that items are not in a shipment
-    if @item.destroy
+    if @item.shipped_items.empty?
+      @item.destroy
       redirect_to root_path, status: :see_other
     else
       render :edit, status: :unprocessable_entity
