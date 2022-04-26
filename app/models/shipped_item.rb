@@ -14,6 +14,7 @@ class ShippedItem < ApplicationRecord
   belongs_to :shipment
   validates :quantity, presence: true, numericality: {
     greater_than: 0,
+    only_integer: true,
     less_than: 922_337_203_685_477_580_7
   }
   validates :item, presence: true
